@@ -5,6 +5,8 @@
  *      共通ライブラリ関数定義
  */
 
+#include <typedef.h>
+
 /* 32bitレジスタからの入力 */
 static inline UW in_w(UW adr) { return *(_UW*)adr; }
 
