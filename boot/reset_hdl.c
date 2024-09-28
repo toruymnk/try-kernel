@@ -20,15 +20,13 @@ extern const void *__bss_end;
 #define XOSC_STARTUP_DELAY ((XOSC_KHz + 128) / 256)
 
 /* PLLの初期化 */
-static void init_pll(UW pll, UINT refdiv, UINT vco_freq, UINT post_div1,
-                     UINT post_div2) {
+static void init_pll(UW pll, UINT refdiv, UINT vco_freq, UINT post_div1, UINT post_div2) {
   UW ref_mhz, fbdiv, pdiv;
   UW pll_reset;
 
   ref_mhz = XOSC_MHz / refdiv;
   fbdiv = vco_freq / (ref_mhz * MHz);
-  pdiv = (post_div1 << PLL_PRIM_POSTDIV1_LSB) |
-         (post_div2 << PLL_PRIM_POSTDIV2_LSB);
+  pdiv = (post_div1 << PLL_PRIM_POSTDIV1_LSB) | (post_div2 << PLL_PRIM_POSTDIV2_LSB);
 
   pll_reset = (pll == PLL_USB_BASE) ? (1 << 13) : (1 << 12);
   set_w(RESETS_RESET, pll_reset);
@@ -57,8 +55,7 @@ static void clock_config(UINT clock_kind, UW auxsrc, UW src_freq, UW freq) {
   if (div > in_w(clock + CLK_x_DIV)) out_w(clock + CLK_x_DIV, div);
   clr_w(clock + CLK_x_CTRL, CLK_CTRL_ENABLE);
 
-  out_w(clock + CLK_x_CTRL,
-        (in_w(clock + CLK_x_CTRL) & ~CLK_SYS_CTRL_AUXSRC) | (auxsrc << 5));
+  out_w(clock + CLK_x_CTRL, (in_w(clock + CLK_x_CTRL) & ~CLK_SYS_CTRL_AUXSRC) | (auxsrc << 5));
   set_w(clock + CLK_x_CTRL, CLK_CTRL_ENABLE);
   out_w(clock + CLK_x_DIV, div);
 }
@@ -90,10 +87,8 @@ static void init_clock(void) {
     out_w(CLK_REF + CLK_x_DIV, div);
   }
   clr_w(CLK_REF + CLK_x_CTRL, CLK_CTRL_ENABLE);
-  out_w(CLK_REF + CLK_x_CTRL,
-        (in_w(CLK_REF + CLK_x_CTRL) & ~CLK_SYS_CTRL_AUXSRC));
-  out_w(CLK_REF + CLK_x_CTRL,
-        (in_w(CLK_REF + CLK_x_CTRL) & ~CLK_REF_CTRL_SRC) | 2);
+  out_w(CLK_REF + CLK_x_CTRL, (in_w(CLK_REF + CLK_x_CTRL) & ~CLK_SYS_CTRL_AUXSRC));
+  out_w(CLK_REF + CLK_x_CTRL, (in_w(CLK_REF + CLK_x_CTRL) & ~CLK_REF_CTRL_SRC) | 2);
   while (!(in_w(CLK_REF + CLK_x_SELECTED) & (1 << 2)));
 
   set_w(CLK_REF + CLK_x_CTRL, CLK_CTRL_ENABLE);
@@ -107,10 +102,8 @@ static void init_clock(void) {
   clr_w(CLK_SYS + CLK_x_CTRL, CLK_REF_CTRL_SRC);
   while (!(in_w(CLK_SYS + CLK_x_SELECTED) & 0x1));
 
-  out_w(CLK_SYS + CLK_x_CTRL,
-        (in_w(CLK_SYS + CLK_x_CTRL) & ~CLK_SYS_CTRL_AUXSRC));
-  out_w(CLK_SYS + CLK_x_CTRL,
-        (in_w(CLK_SYS + CLK_x_CTRL) & ~CLK_REF_CTRL_SRC) | 1);
+  out_w(CLK_SYS + CLK_x_CTRL, (in_w(CLK_SYS + CLK_x_CTRL) & ~CLK_SYS_CTRL_AUXSRC));
+  out_w(CLK_SYS + CLK_x_CTRL, (in_w(CLK_SYS + CLK_x_CTRL) & ~CLK_REF_CTRL_SRC) | 1);
   while (!(in_w(CLK_SYS + CLK_x_SELECTED) & (1 << 1)));
 
   set_w(CLK_SYS + CLK_x_CTRL, CLK_CTRL_ENABLE);
@@ -177,9 +170,9 @@ static void init_section(void) {
 /*** システムタイマの初期化 ***/
 
 static void init_systim(void) {
-  out_w(SYST_CSR, SYST_CSR_CLKSOURCE);             /* SysTick動作停止 */
-  out_w(SYST_RVR, (TIMER_PERIOD * TMCLK_KHz) - 1); /* リロード値設定 */
-  out_w(SYST_CVR, (TIMER_PERIOD * TMCLK_KHz) - 1); /* カウント値設定 */
+  out_w(SYST_CSR, SYST_CSR_CLKSOURCE);                   /* SysTick動作停止 */
+  out_w(SYST_RVR, (TIMER_PERIOD * TMCLK_KHz) - 1);       /* リロード値設定 */
+  out_w(SYST_CVR, (TIMER_PERIOD * TMCLK_KHz) - 1);       /* カウント値設定 */
   out_w(SYST_CSR, SYST_CSR_CLKSOURCE | SYST_CSR_ENABLE); /* SysTick動作開始 */
 }
 

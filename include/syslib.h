@@ -26,9 +26,7 @@ static inline void set_w(UW adr, UW data) { *(_UW*)(adr + OP_SET) = data; }
 static inline void xset_w(UW adr, UW data) { *(_UW*)(adr + OP_XOR) = data; }
 
 /* PRIMASKレジスタ制御インライン関数 */
-static inline void set_primask(INT pm) {
-  __asm__ volatile("msr primask, %0" ::"r"(pm));
-}
+static inline void set_primask(INT pm) { __asm__ volatile("msr primask, %0" ::"r"(pm)); }
 
 static inline UW get_primask(void) {
   UW pm;
