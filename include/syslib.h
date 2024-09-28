@@ -40,4 +40,8 @@ static inline UW get_primask(void) {
 /* 割込み許可マクロ */
 #define EI(intsts) (set_primask(intsts))
 
+/* デバッグ用シリアル通信 */
+void tm_com_init(void);
+UINT tm_putstring(char* str);
+
 #endif /* SYSLIB_H */

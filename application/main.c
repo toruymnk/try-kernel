@@ -1,6 +1,4 @@
-#include "sysdef.h"
-#include "syslib.h"
-#include "typedef.h"
+#include <trykernel.h>
 
 /* 時間待ち関数 */
 static void delay_ms(UINT ms) {
@@ -14,9 +12,13 @@ static void delay_ms(UINT ms) {
 }
 
 int main(void) {
+  tm_com_init();                       /* デバッグ出力の初期化 */
+  tm_putstring("Hello, TryKernel!\n"); /* デバッグ出力 */
+
   while (1) {
     out_w(GPIO_OUT_XOR, (1 << 25)); /* LEDの表示反転 */
     delay_ms(500);                  /* 0.5秒待ち */
   }
+
   return 0;
 }
