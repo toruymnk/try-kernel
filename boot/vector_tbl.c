@@ -8,6 +8,9 @@
 #include <syslib.h>
 #include <typedef.h>
 
+/* ディスパッチャ */
+extern void dispatch_entry(void);
+
 /* デフォルトハンドラ */
 void Default_Handler(void) { while (1); }
 
@@ -27,7 +30,7 @@ void (*const vector_tbl[])() __attribute__((section(".vector"))) = {
     Default_Handler,           // 11: Svcall
     0,                         // 12: 未使用
     0,                         // 13: 未使用
-    Default_Handler,           // 14: Pend SV
+    dispatch_entry,            // 14: Pend SV
     Default_Handler,           // 15: Systick
     Default_Handler,           // IRQ 0
     Default_Handler,           // IRQ 1
