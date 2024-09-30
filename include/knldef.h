@@ -8,7 +8,7 @@
 #include "syslib.h"
 
 /* グローバル関数 */
-extern void Reset_Handler(void); /* リセットハンドラ */
+extern void Reset_Handler(void);  // リセットハンドラ
 
 extern void dispatch_entry(void);  // ディスパッチャ
 

@@ -17,7 +17,7 @@ static void delay_ms(UINT ms) {
   UINT cnt = ms / TIMER_PERIOD;
 
   while (cnt) {
-    if ((in_w(SYST_CSR) & SYST_CSR_COUNTFLAG) != 0) { /* TIMER_PERIOD経過するとフラグがセット */
+    if ((in_w(SYST_CSR) & SYST_CSR_COUNTFLAG) != 0) {  // TIMER_PERIOD経過するとフラグがセット
       cnt--;
     }
   }
