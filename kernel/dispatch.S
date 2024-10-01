@@ -1,13 +1,18 @@
 /* 
  *** Try Kernel
- *      簡易ディスパッチャ
+ *      ディスパッチャ
 */
     .align 2
     .thumb_func
     .globl dispatch_entry
 
 dispatch_entry:
-    /* 1. 実行中のタスクの実行コンテキスト情報をスタックに退避 */
+    mov     r0, #1
+    msr     primask, r0  // 割込み禁止
+    ldr     r1, =disp_running
+    str     r0, [r1]
+
+    /* 1. 実行中の関数の実行コンテキスト情報をスタックに退避 */
     push    {r4-r7}
     mov     r0, r8
     mov     r1, r9
@@ -19,34 +24,49 @@ dispatch_entry:
     ldr     r0, =cur_task
     ldr     r1, [r0]
     cmp     r1, #0
-    beq     disp_010  // cur_taskのID番号 = 0 ならば disp_010へ
+    beq     disp_010  // 実行中のタスクなし(cur_task = 0)ならばdisp_010へ
 
-    /* 3. SPレジスタの値をctx_tblに格納 */
-    ldr     r0, =ctx_tbl
-    sub     r1, #1
-    lsl     r1, r1, #2
+    /* 3. 実行コンテキスト情報へのポインタを実行中のタスクのTCBに格納 */
     mov     r2, sp
-    str     r2, [r0, r1]
+    str     r2, [r1]
 
 disp_010:
-    /* 4. 実行中のタスクの変更 */
-    ldr     r0, =next_task
-    ldr     r1, [r0]
-    ldr     r0, =cur_task
-    str     r1, [r0]
+    /* 4. 次に実行するタスクの確認 */
+    ldr     r1, =sche_task
+    ldr     r2, [r1]
+    cmp     r2, #0
+    bne     disp_030
 
-    /* 5. スタックの切り替え */
-    ldr     r0, =ctx_tbl
-    sub     r1, #1
-    lsl     r1, r1, #2
-    ldr     r2, [r0, r1]
-    mov     sp, r2
+    /* 5. 次に実行するタスクが無かった場合の処理 */
+    str     r2, [r0]
+disp_020:
+    mov     r3, #0
+    msr     primask, r3  // 割込み許可
+    mov     r3, #1
+    msr     primask, r3  // 割込み禁止
 
-    /* 6. スタック上の実行コンテキスト情報の復元 */
+    ldr     r2, [r1]
+    cmp     r2, #0
+    beq     disp_020
+
+    /* 6. 実行するタスクの切り替え */
+disp_030:
+    str     r2, [r0]
+    ldr     r0, [r2]
+    mov     sp, r0
+
+    /* 7. スタック上の実行コンテキスト情報の復元 */
     pop     {r0-r3}
     mov     r11, r3
     mov     r10, r2
     mov     r9, r1
     mov     r8, r0
     pop     {r4-r7}
+
+    /* 割込み許可 */
+    ldr     r0, =disp_running
+    mov     r1, #0
+    str     r1, [r0]
+    msr     primask, r1  // 割込み許可
+
     bx      lr
