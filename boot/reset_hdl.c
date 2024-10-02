@@ -16,7 +16,6 @@ extern const void *__bss_start;
 extern const void *__bss_end;
 
 /*** クロックの初期化 ***/
-
 #define XOSC_STARTUP_DELAY ((XOSC_KHz + 128) / 256)
 
 /* PLLの初期化 */

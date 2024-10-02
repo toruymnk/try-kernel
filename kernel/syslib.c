@@ -2,6 +2,7 @@
  *** Try Kernel
  *      システムライブラリ
  */
+
 #include <knldef.h>
 #include <trykernel.h>
 

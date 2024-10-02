@@ -1,7 +1,7 @@
 /* 
  *** Try Kernel
  *      ディスパッチャ
-*/
+ */
     .align 2
     .thumb_func
     .globl dispatch_entry

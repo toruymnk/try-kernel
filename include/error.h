@@ -1,7 +1,7 @@
 #ifndef ERROR_H
 #define ERROR_H
 /*
- * Try Kernel
+ *** Try Kernel
  *      エラーコード定義
  */
 

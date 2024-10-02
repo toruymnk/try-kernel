@@ -2,6 +2,7 @@
  *** Try Kernel
  *      スケジューラ
  */
+
 #include <knldef.h>
 #include <trykernel.h>
 

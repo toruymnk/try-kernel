@@ -2,6 +2,7 @@
  *** Try Kernel
  *      初期タスク
  */
+
 #include <knldef.h>
 #include <trykernel.h>
 

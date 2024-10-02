@@ -2,6 +2,7 @@
  *** Try Kernel
  *      タスク管理
  */
+
 #include <knldef.h>
 #include <trykernel.h>
 

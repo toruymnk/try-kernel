@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 /*
- * Try Kernel
+ *** Try Kernel
  *      コンフィギュレーション定義
  */
 

@@ -2,6 +2,7 @@
  *** Try Kernel
  *      タスクの待ち行列操作関数
  */
+
 #include <knldef.h>
 #include <trykernel.h>
 
