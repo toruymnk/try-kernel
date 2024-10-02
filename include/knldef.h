@@ -15,30 +15,43 @@ typedef enum {
   TS_DORMANT = 8    // 休止状態
 } TSTAT;
 
+/* タスクの待ち要因 */
+typedef enum {
+  TWFCT_NON = 0,  // 無し
+  TWFCT_DLY = 1,  // tk_dly_tskによる時間待ち
+} TWFCT;
+
 /* TCB(Task Control Block)定義 */
 typedef struct st_tcb {
   void *context;  // コンテキスト情報へのポインタ
 
-  /* キュー用ポインタ */
+  /* タスクキュー用ポインタ */
   struct st_tcb *pre;   // 一つ前の要素
   struct st_tcb *next;  // 一つ後の要素
 
+  /* タスク情報 */
   TSTAT state;   // タスク状態
   FP tskadr;     // 実行開始アドレス
   PRI itskpri;   // 実行優先度
   void *stkadr;  // スタックのアドレス
   SZ stksz;      // スタックのサイズ
+
+  /* 時間待ち情報 */
+  TWFCT waifct;   // 待ち要因
+  RELTIM waitim;  // 待ち時間
+  ER *waierr;     // 待ち解除のエラーコード
 } TCB;
 
 extern TCB tcb_tbl[];       // TCBテーブル
 extern TCB *ready_queue[];  // タスクの実行待ち行列（優先度毎）
 extern TCB *cur_task;       // 実行中のタスク
 extern TCB *sche_task;      // 次に実行するタスク
+extern TCB *wait_queue;     // タスクの時間待ち行列
 
 /* グローバル関数 */
-extern void Reset_Handler(void);  // リセットハンドラ
-
-extern void dispatch_entry(void);  // ディスパッチャ
+extern void Reset_Handler(void);     // リセットハンドラ
+extern void dispatch_entry(void);    // ディスパッチャ
+extern void systimer_handler(void);  // システムタイマ割込みハンドラ
 
 /* ディスパッチャの呼出し */
 #define SCB_ICSR 0xE000ED04       // 割込み制御ステートレジスタのアドレス

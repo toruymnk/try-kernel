@@ -31,7 +31,7 @@ void (*const vector_tbl[])() __attribute__((section(".vector"))) = {
     0,                         // 12: 未使用
     0,                         // 13: 未使用
     dispatch_entry,            // 14: Pend SV
-    Default_Handler,           // 15: Systick
+    systimer_handler,          // 15: Systick
     Default_Handler,           // IRQ 0
     Default_Handler,           // IRQ 1
     Default_Handler,           // IRQ 2

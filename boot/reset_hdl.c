@@ -170,10 +170,10 @@ static void init_section(void) {
 /*** システムタイマの初期化 ***/
 
 static void init_systim(void) {
-  out_w(SYST_CSR, SYST_CSR_CLKSOURCE);                    // SysTick動作停止
-  out_w(SYST_RVR, (TIMER_PERIOD * TMCLK_KHz) - 1);        // リロード値設定
-  out_w(SYST_CVR, (TIMER_PERIOD * TMCLK_KHz) - 1);        // カウント値設定
-  out_w(SYST_CSR, SYST_CSR_CLKSOURCE | SYST_CSR_ENABLE);  // SysTick動作開始
+  out_w(SYST_CSR, SYST_CSR_CLKSOURCE | SYST_CSR_TICKINT);  // SysTick動作停止
+  out_w(SYST_RVR, (TIMER_PERIOD * TMCLK_KHz) - 1);         // リロード値設定
+  out_w(SYST_CVR, (TIMER_PERIOD * TMCLK_KHz) - 1);         // カウント値設定
+  out_w(SYST_CSR, SYST_CSR_CLKSOURCE | SYST_CSR_TICKINT | SYST_CSR_ENABLE);  // SysTick動作開始
 }
 
 /*** リセットハンドラ ****/

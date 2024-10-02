@@ -28,19 +28,21 @@ T_CTSK ctsk_2 = {
 
 /* タスク1の実行関数 */
 void task_1(INT stacd, void *exinf) {
-  tm_putstring("Start Task-1\n");
-  tk_ext_tsk();
+  while (1) {
+    out_w(GPIO_OUT_XOR, (1 << 25));  // LEDの点灯
+    tk_dly_tsk(500);                 // 0.5秒待ち
+  }
 }
 
 /* タスク2の実行関数 */
 void task_2(INT stacd, void *exinf) {
-  tm_putstring("Start Task-2\n");
-  tk_ext_tsk();
+  while (1) {
+    tm_putstring("Hello!\n");  // 文字出力
+    tk_dly_tsk(1000);          // 1秒待ち
+  }
 }
 
 int usermain(void) {
-  tm_putstring("Start user-main\n");
-
   /* タスク1の生成、実行 */
   tskid_1 = tk_cre_tsk(&ctsk_1);
   tk_sta_tsk(tskid_1, 0);
