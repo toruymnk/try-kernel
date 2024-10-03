@@ -19,6 +19,7 @@ typedef enum {
 typedef enum {
   TWFCT_NON = 0,  // 無し
   TWFCT_DLY = 1,  // tk_dly_tskによる時間待ち
+  TWFCT_SLP = 2,  // tk_slp_tskによる起床待ち
 } TWFCT;
 
 /* TCB(Task Control Block)定義 */
@@ -35,6 +36,7 @@ typedef struct st_tcb {
   PRI itskpri;   // 実行優先度
   void *stkadr;  // スタックのアドレス
   SZ stksz;      // スタックのサイズ
+  INT wupcnt;    // 起床要求数
 
   /* 時間待ち情報 */
   TWFCT waifct;   // 待ち要因
