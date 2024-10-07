@@ -6,7 +6,7 @@
 #include <knldef.h>
 #include <trykernel.h>
 
-TCB tcb_tbl[CNF_MAX_TSKID];  // タスク管理ブロック (TCB)
+TCB tcb_tbl[CNF_MAX_TSKID];  // タスク管理ブロック（TCB）
 
 /* タスク生成API */
 ID tk_cre_tsk(const T_CTSK *pk_ctsk) {

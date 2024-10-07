@@ -160,7 +160,7 @@ static void init_section(void) {
     *top++ = *src++;
   }
 
-  /* bssセクションの初期化 （0クリア） */
+  /* bssセクションの初期化（0クリア） */
   for (i = ((int)&__bss_end - (int)&__bss_start) / sizeof(int); i > 0; i--) {
     *top++ = 0;
   }

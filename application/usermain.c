@@ -33,7 +33,7 @@ void task_btn(INT stacd, void *exinf) {
   out_w(GPIO_OE_CLR, (1 << 14));                             // 出力無効
   out_w(GPIO_CTRL(14), 5);                                   // SIO機能に設定
 
-  btn0 = in_w(GPIO_IN) & (1 << 14);  // スイッチ読込み(初期値)
+  btn0 = in_w(GPIO_IN) & (1 << 14);  // スイッチ読込み（初期値）
   while (1) {
     btn = in_w(GPIO_IN) & (1 << 14);  // スイッチ読込み
     if (btn != btn0) {

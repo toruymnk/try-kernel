@@ -24,7 +24,7 @@ dispatch_entry:
     ldr     r0, =cur_task
     ldr     r1, [r0]
     cmp     r1, #0
-    beq     disp_010  // 実行中のタスクなし(cur_task = 0)ならばdisp_010へ
+    beq     disp_010  // 実行中のタスクなし（cur_task = 0）ならばdisp_010へ
 
     /* 3. 実行コンテキスト情報へのポインタを実行中のタスクのTCBに格納 */
     mov     r2, sp

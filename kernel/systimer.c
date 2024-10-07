@@ -6,7 +6,7 @@
 #include <knldef.h>
 #include <trykernel.h>
 
-TCB *wait_queue;  // 時間待ち状態のタスクの待ち行列(ウェイトキュー)
+TCB *wait_queue;  // 時間待ち状態のタスクの待ち行列（ウェイトキュー）
 
 /* システムタイマ割込みハンドラ */
 void systimer_handler(void) {
