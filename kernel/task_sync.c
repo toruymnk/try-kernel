@@ -34,9 +34,9 @@ ER tk_slp_tsk(TMO tmout) {
   ER err = E_OK;
 
   DI(intsts);                  // 割込みの禁止
-  if (cur_task->wupcnt > 0) {  // 起床要求有り
+  if (cur_task->wupcnt > 0) {  // 起床要求あり
     cur_task->wupcnt--;
-  } else {                                               // 起床要求無し
+  } else {                                               // 起床要求なし
     tqueue_remove_top(&ready_queue[cur_task->itskpri]);  // タスクをレディキューから外す
 
     /* TCBの各種情報を変更する */

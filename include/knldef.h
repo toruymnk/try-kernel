@@ -17,7 +17,7 @@ typedef enum {
 
 /* タスクの待ち要因 */
 typedef enum {
-  TWFCT_NON = 0,  // 無し
+  TWFCT_NON = 0,  // なし
   TWFCT_DLY = 1,  // tk_dly_tskによる時間待ち
   TWFCT_SLP = 2,  // tk_slp_tskによる起床待ち
 } TWFCT;

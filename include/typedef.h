@@ -13,7 +13,7 @@ typedef int16_t H;  // 16 bit
 typedef int32_t W;  // 32 bit
 typedef int64_t D;  // 64 bit
 
-/* 符号無し整数 */
+/* 符号なし整数 */
 typedef uint8_t UB;   // 8 bit
 typedef uint16_t UH;  // 16 bit
 typedef uint32_t UW;  // 32 bit
@@ -25,7 +25,7 @@ typedef volatile int16_t _H;  // 16 bit
 typedef volatile int32_t _W;  // 32 bit
 typedef volatile int64_t _D;  // 64 bit
 
-/* volatole 符号無し整数 */
+/* volatole 符号なし整数 */
 typedef volatile uint8_t _UB;   // 8 bit
 typedef volatile uint16_t _UH;  // 16 bit
 typedef volatile uint32_t _UW;  // 32 bit
@@ -33,7 +33,7 @@ typedef volatile uint64_t _UD;  // 64 bit
 
 /* サイズ指定なし */
 typedef int INT;            // 符号付き整数
-typedef unsigned int UINT;  // 符号無し整数
+typedef unsigned int UINT;  // 符号なし整数
 
 /* 特別な意味を持つ整数 */
 typedef INT ID;     // ID番号
