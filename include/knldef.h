@@ -20,6 +20,7 @@ typedef enum {
   TWFCT_NON = 0,  // なし
   TWFCT_DLY = 1,  // tk_dly_tskによる時間待ち
   TWFCT_SLP = 2,  // tk_slp_tskによる起床待ち
+  TWFCT_FLG = 3,  // tk_wai_flgによるフラグ待ち
 } TWFCT;
 
 /* TCB(Task Control Block)定義 */
@@ -40,8 +41,14 @@ typedef struct st_tcb {
 
   /* 時間待ち情報 */
   TWFCT waifct;   // 待ち要因
+  ID waiobj;      // 待ち対象オブジェクト
   RELTIM waitim;  // 待ち時間
   ER *waierr;     // 待ち解除のエラーコード
+
+  /* イベントフラグ待ち情報 */
+  UINT waiptn;     // 待ちフラグパターン
+  UINT wfmode;     // 待ちモード
+  UINT *p_flgptn;  // 待ち解除時のフラグパターン
 } TCB;
 
 extern TCB tcb_tbl[];       // TCBテーブル
@@ -71,6 +78,18 @@ extern void *make_context(UW *sp, UINT ssize, void (*fp)());  // タスクコン
 extern void tqueue_add_entry(TCB **queue, TCB *tcb);     // エントリ追加関数
 extern void tqueue_remove_top(TCB **queue);              // 先頭エントリ削除関数
 extern void tqueue_remove_entry(TCB **queue, TCB *tcb);  // エントリ削除関数
+
+/* カーネルオブジェクト状態 */
+typedef enum {
+  KS_NONEXIST = 0,  // 未登録
+  KS_EXIST = 1,     // 登録済み
+} KSSTAT;
+
+/* イベントフラグ管理情報（FLGCB） */
+typedef struct st_flgcb {
+  KSSTAT state;  // イベントフラグ状態
+  UINT flgptn;   // イベントフラグ値
+} FLGCB;
 
 /* OSメイン関数 */
 extern int main(void);
